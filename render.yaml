@@ -1,0 +1,49 @@
+services:
+  # ----------------------------------------------------------------------------
+  # Backend Web Service (Node.js / Express API)
+  # ----------------------------------------------------------------------------
+  - type: web
+    name: traceability-backend
+    env: node
+    rootDir: backend
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_SSL
+        value: "true"
+      - key: AI_PRIMARY_PROVIDER
+        value: gemini
+      - key: AI_SECONDARY_PROVIDER
+        value: groq
+      - key: DATABASE_URL
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+
+  # ----------------------------------------------------------------------------
+  # Frontend Static Site (Vite / React SPA)
+  # ----------------------------------------------------------------------------
+  - type: web
+    name: traceability-frontend
+    env: static
+    rootDir: frontend
+    plan: free
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        sync: false
