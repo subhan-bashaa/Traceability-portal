@@ -1,4 +1,4 @@
-# Fynd Traceability – End-to-End Buyer Traceability Portal
+#  Traceability – End-to-End Buyer Traceability Portal
 
 An enterprise-grade manufacturing digital thread and buyer traceability portal built with **React (Frontend)** and **Node.js + Express + PostgreSQL (Backend)**, featuring multi-provider AI manufacturing quality summarization.
 
