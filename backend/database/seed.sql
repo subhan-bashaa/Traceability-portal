@@ -3,7 +3,16 @@
 -- ==============================================================================
 
 -- Clean existing data
-TRUNCATE TABLE shipments, inspections, reworks, defects, route_logs, operators, stations, components, products RESTART IDENTITY CASCADE;
+TRUNCATE TABLE users, shipments, inspections, reworks, defects, route_logs, operators, stations, components, products RESTART IDENTITY CASCADE;
+
+-- 0. Insert Default Users
+INSERT INTO users (id, name, email, password_hash, role) VALUES
+(1, 'Subhan Basha', 'subhanbasha.025@gmail.com', '$2b$10$GDALlhdsDAFidKQEYdtfUudDrzJ9LmJqsb0/8crmlVE92i7pgq4DO', 'buyer'),
+(2, 'Demo Buyer', 'buyer@tracecore.com', '$2b$10$3DTnajnbT7dKLkZMrLaktuZdb7AB9PDn82W1dcI4HO7egClj8CBTK', 'buyer'),
+(3, 'Quality Engineer', 'engineer@tracecore.com', '$2b$10$3DTnajnbT7dKLkZMrLaktuZdb7AB9PDn82W1dcI4HO7egClj8CBTK', 'quality_engineer')
+ON CONFLICT (email) DO NOTHING;
+
+ALTER SEQUENCE users_id_seq RESTART WITH 4;
 
 -- 1. Insert Stations
 INSERT INTO stations (id, station_code, station_name, line_name) VALUES

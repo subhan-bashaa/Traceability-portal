@@ -5,11 +5,15 @@ import { mockProducts, sampleSearches, manufacturingStats } from '../data/mockTr
  * Enterprise Axios Client configuration
  * Connects with Node.js + Express backend via VITE_API_URL or defaults to http://localhost:5000/api
  */
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.PROD
+    ? 'https://traceability-backend-q7nm.onrender.com/api'
+    : 'http://localhost:5000/api');
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 8000,
+  timeout: 35000, // 35 seconds to accommodate Render free-tier cold starts
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',

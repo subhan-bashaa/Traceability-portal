@@ -1,6 +1,7 @@
 import app from './app.js';
 import { env } from './config/env.js';
 import { checkDbConnection, isNeonDatabase } from './config/db.js';
+import { autoMigrateIfEmpty } from './config/autoMigrate.js';
 
 const PORT = env.PORT || 5000;
 
@@ -21,6 +22,7 @@ const server = app.listen(PORT, async () => {
   const dbHealth = await checkDbConnection();
   if (dbHealth.connected) {
     console.log(`✓ ${dbLabel}: CONNECTED (${dbHealth.version?.split(' ')?.[0] || 'OK'})`);
+    await autoMigrateIfEmpty();
   } else {
     console.warn(`! ${dbLabel}: NOT CONNECTED (${dbHealth.error || 'Connection pending'})`);
     console.warn('  To initialize your NeonDB database, run: npm run db:setup');

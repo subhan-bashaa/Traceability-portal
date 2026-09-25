@@ -3,6 +3,7 @@
 -- ==============================================================================
 
 -- Drop tables in reverse foreign-key order for idempotent re-runs
+DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS shipments CASCADE;
 DROP TABLE IF EXISTS inspections CASCADE;
 DROP TABLE IF EXISTS reworks CASCADE;
@@ -12,6 +13,18 @@ DROP TABLE IF EXISTS operators CASCADE;
 DROP TABLE IF EXISTS stations CASCADE;
 DROP TABLE IF EXISTS components CASCADE;
 DROP TABLE IF EXISTS products CASCADE;
+
+-- 0. Users Table (Enterprise Authentication & RBAC)
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    role VARCHAR(64) NOT NULL DEFAULT 'buyer',
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_users_email ON users(email);
 
 -- 1. Products Table (Root record for manufacturing unit)
 CREATE TABLE products (
