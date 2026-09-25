@@ -49,7 +49,21 @@ app.use(express.urlencoded({ extended: true, limit: '100kb' }));
 // 4. Rate Limiting on API surface
 app.use('/api', apiLimiter);
 
-// 5. Health Check Endpoint
+// 5. Root & Health Check Endpoints
+app.get('/', (req, res) => {
+  res.status(200).json({
+    status: 'ONLINE',
+    service: 'TraceCore Traceability API',
+    version: '1.0.0',
+    endpoints: {
+      health: '/api/health',
+      traceability: '/api/traceability/:serialNumber',
+      dashboardStats: '/api/products/stats/dashboard',
+      aiSummary: '/api/ai/traceability-summary',
+    },
+  });
+});
+
 app.get('/api/health', async (req, res) => {
   const dbHealth = await checkDbConnection();
 
