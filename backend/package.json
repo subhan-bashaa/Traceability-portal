@@ -1,0 +1,45 @@
+{
+  "name": "fynd-traceability-backend",
+  "version": "1.0.0",
+  "description": "Backend API for Fynd Traceability – End-to-End Buyer Traceability Portal",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand --detectOpenHandles",
+    "db:setup": "node database/initDb.js"
+  },
+  "keywords": [
+    "traceability",
+    "manufacturing",
+    "express",
+    "postgresql",
+    "ai",
+    "digital-thread"
+  ],
+  "author": "Fynd Manufacturing Systems",
+  "license": "ISC",
+  "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
+    "axios": "^1.7.9",
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.13.1",
+    "redis": "^4.7.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.9",
+    "supertest": "^7.0.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {}
+  }
+}
